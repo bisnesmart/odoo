@@ -163,6 +163,8 @@ class website(orm.Model):
                     'pricelist_id': partner.property_product_pricelist.id,
                     'section_id': self.pool.get('ir.model.data').get_object_reference(cr, uid, 'website', 'salesteam_website_sales')[1],
                 }
+                if 'company_id' in context:
+                    values.update(company_id=context['company_id'])
                 sale_order_id = sale_order_obj.create(cr, SUPERUSER_ID, values, context=context)
                 values = sale_order_obj.onchange_partner_id(cr, SUPERUSER_ID, [], partner.id, context=context)['value']
                 sale_order_obj.write(cr, SUPERUSER_ID, [sale_order_id], values, context=context)
@@ -237,5 +239,3 @@ class website(orm.Model):
             'sale_transaction_id': False,
             'sale_order_code_pricelist_id': False,
         })
-
-
