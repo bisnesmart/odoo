@@ -119,6 +119,7 @@ class AuthSignupHome(openerp.addons.web.controllers.main.Home):
         assert any([k for k in values.values()]), "The form was not properly filled in."
         assert values.get('password') == qcontext.get('confirm_password'), "Passwords do not match; please retype them."
         values['lang'] = request.lang
+        values['company_id'] = request.env.user.company_id.id
         self._signup_with_values(qcontext.get('token'), values)
         request.cr.commit()
 
